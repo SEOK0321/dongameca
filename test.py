@@ -1,7 +1,6 @@
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
-from tkinter.messagebox import *
 import numpy as np
 
 # 모델 로드
