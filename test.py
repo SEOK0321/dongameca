@@ -1,6 +1,6 @@
 import streamlit as st
 from ultralytics import YOLO
-import cv2
+from PIL import Image
 from tkinter.messagebox import *
 import numpy as np
 
@@ -13,11 +13,12 @@ def main():
     uploaded_file = st.file_uploader("사진 업로드", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        file_bytes = uploaded_file.read()
-        img = cv2.imdecode(np.frombuffer(file_bytes, np.uint8), cv2.IMREAD_COLOR)
+        image = Image.open(uploaded_file)
+        # 이미지를 RGB로 변환
+        img = np.array(image.convert('RGB'))
 
         # 사진 표시
-        st.image(img, caption="업로드된 사진", use_column_width=True)
+        st.image(image, caption="업로드된 사진", use_column_width=True)
 
         # 결과 예측
         results = model.predict(
